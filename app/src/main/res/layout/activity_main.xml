@@ -19,7 +19,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/yd">
+            android:id="@+id/yd"
+            android:layout_margin="10dp">
             <ImageView
                 android:id="@+id/spaceryd"
                 android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
                 android:layout_toRightOf="@id/yearUpLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_0_up_right"/>
+                android:src="@drawable/_0_up_right"
+                android:paddingRight="10dp"/>
             <ImageView
                 android:id="@+id/dayUpLeft"
                 android:layout_toRightOf="@id/yearUpRight"
@@ -54,7 +56,8 @@
                 android:layout_toRightOf="@id/dayUpMid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_0_up_right"/>
+                android:src="@drawable/_0_up_right"
+                android:paddingRight="10dp"/>
 
             <ImageView
                 android:id="@+id/yearDownLeft"
@@ -69,7 +72,8 @@
                 android:layout_below="@id/yearUpRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_0_down_right"/>
+                android:src="@drawable/_0_down_right"
+                android:paddingRight="10dp"/>
             <ImageView
                 android:id="@+id/dayDownLeft"
                 android:layout_toRightOf="@id/yearDownRight"
@@ -90,13 +94,15 @@
                 android:layout_below="@id/dayUpRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/_0_down_right"/>
+                android:src="@drawable/_0_down_right"
+                android:paddingRight="10dp"/>
 
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/hms">
+            android:id="@+id/hms"
+            android:layout_margin="10dp">
             <ImageView
                 android:id="@+id/spacerhms"
                 android:layout_width="wrap_content"
@@ -149,7 +155,7 @@
                 android:src="@drawable/_0_down_left"/>
             <ImageView
                 android:id="@+id/hourDownRight"
-                android:layout_toRightOf="@id/spacerhms"
+                android:layout_toRightOf="@id/hourDownLeft"
                 android:layout_below="@id/hourUpRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

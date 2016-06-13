@@ -2,6 +2,7 @@ package com.trx.hkdcountdown;
 
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.text.ParseException;
@@ -14,8 +15,8 @@ import java.util.Date;
 public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
 
     private WeakReference <MainActivity> weakRef;
-    final static String DEADLINE = "Jul 01 00:00:00 GMT+08:30 2047";
-
+    final static String DEADLINE = "2047-07-01T00:00:00.000+0800";
+    //final static String DEADLINE = "Jun 13 14:30:00 GMT+08:30 2016";
 
     public MySyncTimeTask(MainActivity activity) {
         weakRef = new WeakReference<>(activity);
@@ -60,7 +61,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         }
 
         //Date time = new Date(now);
-
+        Log.i ("--->", milliSecondsUntilHKDir + " HKDIETIME ");
         return milliSecondsUntilHKDir;
     }
 
@@ -84,7 +85,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
 
 
     static long ConvertDateToMillSec (String givenDateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd HH:mm:ss z yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         long timeInMilliseconds = 0;
         try {
             Date mDate = sdf.parse(givenDateString);
