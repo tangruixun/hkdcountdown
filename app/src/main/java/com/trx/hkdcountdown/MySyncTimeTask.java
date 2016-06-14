@@ -57,7 +57,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
             // local system is wrong
             milliSecondsUntilHKDir = hkDeadTimeinMillSecond - now;
         } else {
-            milliSecondsUntilHKDir = hkDeadTimeinMillSecond -  System.currentTimeMillis();
+            milliSecondsUntilHKDir = hkDeadTimeinMillSecond - System.currentTimeMillis();
         }
 
         //Date time = new Date(now);
