@@ -45,7 +45,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         long needToChange = 0;
         SntpClient sntpClient = new SntpClient();
 
-        if (sntpClient.requestTime("time.hko.hk", 30000)) {
+        if (sntpClient.requestTime("time.hko.hk", 5000)) {
             now = sntpClient.getNtpTime() + SystemClock.elapsedRealtime() - sntpClient.getNtpTimeReference();
             long localnow = System.currentTimeMillis();
             if (Math.abs(localnow-now) > 1000*60*60) {
@@ -83,6 +83,27 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         mainActivity.startTimer (aLong);
     }
 
+    /**
+     * <p>Runs on the UI thread after {@link #cancel(boolean)} is invoked and
+     * {@link #doInBackground(Object[])} has finished.</p>
+     * <p/>
+     * <p>The default implementation simply invokes {@link #onCancelled()} and
+     * ignores the result. If you write your own implementation, do not call
+     * <code>super.onCancelled(result)</code>.</p>
+     *
+     * @param aLong The result, if any, computed in
+     *              {@link #doInBackground(Object[])}, can be null
+     * @see #cancel(boolean)
+     * @see #isCancelled()
+     */
+    @Override
+    protected void onCancelled(Long aLong) {
+        //super.onCancelled(aLong);
+        long hkDeadTimeinMillSecond = ConvertDateToMillSec(DEADLINE);
+        long milliSecondsUntilHKDir = hkDeadTimeinMillSecond - System.currentTimeMillis();
+        MainActivity mainActivity = weakRef.get();
+        mainActivity.startTimer (milliSecondsUntilHKDir);
+    }
 
     static long ConvertDateToMillSec (String givenDateString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");

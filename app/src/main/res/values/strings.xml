@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HkdCountDown</string>
     <string name="timeiswrong">您的系統時間可能與真實時間差異過大,　計時可能不準確</string>
+    <string name="year_des">年</string>
+    <string name="day_des">日</string>
+    <string name="title_des">距離香港〇〇還有:</string>
 </resources>

@@ -12,19 +12,51 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    MySyncTimeTask myTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
-        MySyncTimeTask myTask = new MySyncTimeTask(this);
+        myTask = new MySyncTimeTask(this);
         myTask.execute();
+    }
 
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.  This means
+     * that in some cases the previous state may still be saved, not allowing
+     * fragment transactions that modify the state.  To correctly interact
+     * with fragments in their proper state, you should instead override
+     * {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (myTask.isCancelled()) {
+            myTask = new MySyncTimeTask(this);
+            myTask.execute();
+        }
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!myTask.isCancelled()) {
+            myTask.cancel(false);
+        }
     }
 
     public void startTimer (Long untilMillSecond) {
@@ -32,13 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
             public void onTick(long millisUntilFinished) {
 
-
                 long seconds = millisUntilFinished / 1000;
                 long minutes = seconds / 60;
                 long hours = minutes / 60;
                 long days = hours / 24;
                 long years = days / 365;
-
 
                 days = days - years * 365;
                 hours = hours - days * 24 - years * 365 * 24;

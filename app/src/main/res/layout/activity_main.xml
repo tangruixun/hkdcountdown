@@ -9,25 +9,71 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.trx.hkdcountdown.MainActivity"
-    android:background="@color/black_overlay">
-
+    android:background="@color/darkgray" >
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        android:layout_alignParentBottom="true">
+    </com.google.android.gms.ads.AdView>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
+        android:layout_above="@id/adView"
         android:id="@+id/main"
         android:layout_centerInParent="true">
+
         <RelativeLayout
             android:id="@+id/l3"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/title_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_des"
+                android:textSize="40sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_des"
+                android:id="@+id/yddes"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/year_des"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/year_des"
+                    android:textSize="36sp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/day_des"
+                    android:layout_toRightOf="@id/year_des"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/day_des"
+                    android:textSize="36sp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"/>
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/yd"
                 android:layout_margin="10dp"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/yddes">
                 <ImageView
                     android:id="@+id/spaceryd"
                     android:layout_width="wrap_content"
@@ -239,13 +285,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        android:layout_alignParentBottom="true">
-    </com.google.android.gms.ads.AdView>
+
 </RelativeLayout>
