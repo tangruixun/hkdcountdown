@@ -1,5 +1,6 @@
 package com.trx.hkdcountdown;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -8,11 +9,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
 
     MySyncTimeTask myTask;
+    private AdView adView;
+
+    int y1_current = -1;
+    int y2_current = -1;
+    int d1_current = -1;
+    int d2_current = -1;
+    int d3_current = -1;
+    int h1_current = -1;
+    int h2_current = -1;
+    int m1_current = -1;
+    int m2_current = -1;
+    int s1_current = -1;
+    int s2_current = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/fg.ttc");
+        TextView titleDesView = (TextView) findViewById(R.id.title_des);
+        titleDesView.setTypeface(customFont);
+
         myTask = new MySyncTimeTask(this);
         myTask.execute();
+
+        adView = (AdView) findViewById(R.id.adView);
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     /**
@@ -41,11 +69,15 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onResume() {
-        super.onResume();
         if (myTask.isCancelled()) {
             myTask = new MySyncTimeTask(this);
             myTask.execute();
         }
+        if (adView != null) {
+            adView.resume();
+        }
+        super.onResume();
+
     }
 
     /**
@@ -57,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
         if (!myTask.isCancelled()) {
             myTask.cancel(false);
         }
+        if (adView != null) {
+            adView.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
     public void startTimer (Long untilMillSecond) {
@@ -100,17 +143,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFlipBorder(long years, long days, long hours, long minutes, long seconds) {
-        int y1_current = -1;
-        int y2_current = -1;
-        int d1_current = -1;
-        int d2_current = -1;
-        int d3_current = -1;
-        int h1_current = -1;
-        int h2_current = -1;
-        int m1_current = -1;
-        int m2_current = -1;
-        int s1_current = -1;
-        int s2_current = -1;
 
         int y1 = (int) years / 10;
         int y2 = (int) years % 10;
@@ -171,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     private void flip(int upperId, int lowerId, int s1, char p) {
 
         ImageView imgUpperView = (ImageView) findViewById (upperId);
-        ImageView imgLowerView = (ImageView) findViewById(lowerId);
+        ImageView imgLowerView = (ImageView) findViewById (lowerId);
 
         String upperSrc = "_" + s1 + "_up_";
         String lowerSrc = "_" + s1 + "_down_";
@@ -203,8 +235,13 @@ public class MainActivity extends AppCompatActivity {
         upperDrawable = ResourcesCompat.getDrawable(getResources(), imageUpperResource, null);
         lowerDrawable = ResourcesCompat.getDrawable(getResources(), imageLowerResource, null);
 
+
+        Animation slideAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
+
         imgUpperView.setImageDrawable(upperDrawable);
+        imgUpperView.setAnimation(slideAnimation);
         imgLowerView.setImageDrawable(lowerDrawable);
+        imgLowerView.setAnimation(slideAnimation);
     }
 
 }
