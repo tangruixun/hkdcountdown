@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">香港 2047 倒計時機</string>
+    <string name="app_name">香港2047倒計時機</string>
     <string name="timeiswrong">您的系統時間可能與真實時間差異過大,　計時可能不準確</string>
     <string name="year_des">年</string>
     <string name="day_des">日</string>
-    <string name="title_des">距離香港扑街還有:</string>
+    <string name="title_des">距離香港〇〇還剩: </string>
     <string name="widget_days">　日</string>
-    <string name="widget_until_des">距香港扑街還有</string>
+    <string name="widget_until_des">距離香港〇〇還剩 </string>
+    <string name="hkdied">香港已經扑街</string>
 </resources>
