@@ -8,8 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.trx.hkdcountdown.MainActivity"
-    android:background="@color/darkgray" >
+    tools:context="com.trx.hkdcountdown.MainActivity" >
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/adView"
+        android:layout_alignParentBottom="true"
         android:id="@+id/main"
         android:layout_centerInParent="true">
 
@@ -40,7 +39,9 @@
                 android:text="@string/title_des"
                 android:textSize="40sp"
                 android:textColor="@color/black"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:paddingTop="30dp"
+                android:paddingBottom="5dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"

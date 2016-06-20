@@ -39,7 +39,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
     @Override
     protected Long doInBackground(Void... params) {
         //long now = SystemClock.;
-        long milliSecondsUntilHKDir = 0;
+        long milliSecondsUntilHKDir;
         long hkDeadTimeinMillSecond = ConvertDateToMillSec(DEADLINE);
         long now = 0;
         long needToChange = 0;
@@ -62,7 +62,12 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
 
         //Date time = new Date(now);
         Log.i ("--->", milliSecondsUntilHKDir + " HKDIETIME ");
-        return milliSecondsUntilHKDir;
+        if (milliSecondsUntilHKDir > 0) {
+            return milliSecondsUntilHKDir;
+        } else {
+            return 0L;
+        }
+
     }
 
     /**
