@@ -32,6 +32,12 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
+
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_about"
+            android:theme="@style/FullscreenTheme" />
     </application>
 
 </manifest>

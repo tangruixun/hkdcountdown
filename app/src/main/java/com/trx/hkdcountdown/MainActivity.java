@@ -1,11 +1,14 @@
 package com.trx.hkdcountdown;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,25 +28,28 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    MySyncTimeTask myTask;
+    private MySyncTimeTask myTask;
     private AdView adView;
     private TextView titleDesView;
+    private Activity activity;
 
-    int y1_current = -1;
-    int y2_current = -1;
-    int d1_current = -1;
-    int d2_current = -1;
-    int d3_current = -1;
-    int h1_current = -1;
-    int h2_current = -1;
-    int m1_current = -1;
-    int m2_current = -1;
-    int s1_current = -1;
-    int s2_current = -1;
+    private int y1_current = -1;
+    private int y2_current = -1;
+    private int d1_current = -1;
+    private int d2_current = -1;
+    private int d3_current = -1;
+    private int h1_current = -1;
+    private int h2_current = -1;
+    private int m1_current = -1;
+    private int m2_current = -1;
+    private int s1_current = -1;
+    private int s2_current = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        activity = this;
 
         myTask = new MySyncTimeTask(this);
         myTask.execute();
@@ -241,6 +247,24 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        FloatingActionButton fab_settingBtn = (FloatingActionButton) findViewById(R.id.settingbtn);
+        FloatingActionButton fab_about = (FloatingActionButton) findViewById(R.id.aboutbtn);
+        fab_settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settingsIntent = new Intent(activity, SettingsActivity.class);
+                startActivity(settingsIntent);
+            }
+        });
+        fab_about.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent aboutIntent = new Intent(activity, AboutActivity.class);
+                startActivity(aboutIntent);
+            }
+        });
+
     }
 
     private void playSound (int res) {
