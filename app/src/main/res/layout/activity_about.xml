@@ -15,7 +15,7 @@
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="@string/copyright_content"
-        android:textColor="#556677"
+        android:textColor="@color/salmon"
         android:textSize="50sp"
         android:textStyle="bold" />
 

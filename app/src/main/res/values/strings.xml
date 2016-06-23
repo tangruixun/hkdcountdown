@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">香港2047倒計時機</string>
+    <string name="app_name">2047倒計時機</string>
     <string name="timeiswrong">您的系統時間可能與真實時間差異過大,　計時可能不準確</string>
     <string name="year_des">年</string>
     <string name="day_des">日</string>
@@ -14,12 +14,12 @@
 
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_notifications">聲音設定</string>
 
-    <string name="pref_title_tick_sound">Sound</string>
+    <string name="pref_title_tick_sound">秒針聲音</string>
 
     <string name="copyright_content">有傘有聚</string>
-    <string name="close_button">CLOSE</string>
+    <string name="close_button">關閉</string>
     <string name="title_activity_about">關於</string>
     <string name="tick_sound_key">tick_sound_key</string>
 </resources>

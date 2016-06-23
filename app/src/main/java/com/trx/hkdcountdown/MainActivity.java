@@ -2,12 +2,14 @@ package com.trx.hkdcountdown;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -372,6 +374,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("--->", years+" years " + days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds ");
 
                 setFlipBorder (years, days, hours, minutes, seconds);
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+                boolean tickSound = sharedPreferences.getBoolean(getString  (R.string.tick_sound_key), false);
+                if (tickSound) {
+                    playSound(R.raw.feed);
+                }
+
 
                 //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
                 //here you can have your logic to set text to edittext
