@@ -400,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
         int y1 = (int) years / 10;
         int y2 = (int) years % 10;
         int d1 = (int) days / 100;
-        int d2 = (int) days / 10;
+        int d2 = (int) days / 10 - d1 * 10;
         int d3 = (int) days % 10;
         int h1 = (int) hours / 10;
         int h2 = (int) hours % 10;
