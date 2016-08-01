@@ -1,12 +1,15 @@
 package com.trx.hkdcountdown;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -54,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
 
         myTask = new MySyncTimeTask(this);
-        myTask.execute();
+
+        if (isOnline()) {
+            myTask.execute();
+        }
 
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -295,6 +301,13 @@ public class MainActivity extends AppCompatActivity {
         s2_current = -1;
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     /**
      * Dispatch onResume() to fragments.  Note that for better inter-operation
      * with older versions of the platform, at the point of this call the
@@ -308,7 +321,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         if (myTask.isCancelled()) {
             myTask = new MySyncTimeTask(this);
-            myTask.execute();
+            if (isOnline()) {
+                myTask.execute();
+            }
         }
         if (adView != null) {
             adView.resume();
