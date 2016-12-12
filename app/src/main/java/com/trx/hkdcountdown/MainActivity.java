@@ -58,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         myTask = new MySyncTimeTask(this);
 
-        if (isOnline()) {
-            myTask.execute();
-        }
+        myTask.execute(0);
 
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -82,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         titleDesView = (TextView) findViewById(R.id.title_des);
         assert titleDesView != null;
         titleDesView.setTypeface(customFont);
-
-        adView = (AdView) findViewById(R.id.adView);
-        final AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
         ImageView dot1V = (ImageView) findViewById (R.id.dot1);
         ImageView dot2V = (ImageView) findViewById (R.id.dot2);
@@ -273,6 +267,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (isOnline()) {
+            myTask.execute(1);
+        }
+
+        adView = (AdView) findViewById(R.id.adView);
+        final AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     private void playSound (int res) {

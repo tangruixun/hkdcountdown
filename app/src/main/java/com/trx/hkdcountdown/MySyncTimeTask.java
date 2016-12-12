@@ -12,13 +12,13 @@ import java.util.Date;
 /**
  * Created by TRX on 06/08/2016.
  */
-public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
+public class MySyncTimeTask extends AsyncTask <Integer, Void, Long> {
 
     private WeakReference <MainActivity> weakRef;
-    final static String DEADLINE = "2047-07-01T00:00:00.000+0800";
+    private final static String DEADLINE = "2047-07-01T00:00:00.000+0800";
     //final static String DEADLINE = "Jun 13 14:30:00 GMT+08:30 2016";
 
-    public MySyncTimeTask(MainActivity activity) {
+    MySyncTimeTask(MainActivity activity) {
         weakRef = new WeakReference<>(activity);
     }
 
@@ -30,14 +30,17 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
      * This method can call {@link #publishProgress} to publish updates
      * on the UI thread.
      *
-     * @param params The parameters of the task.
+     * @param flags The parameters of the task.
      * @return A result, defined by the subclass of this task.
      * @see #onPreExecute()
      * @see #onPostExecute
      * @see #publishProgress
      */
+    // flags: 0 - first run
+    //        1 - check online;
+
     @Override
-    protected Long doInBackground(Void... params) {
+    protected Long doInBackground(Integer... flags) {
         //long now = SystemClock.;
         long milliSecondsUntilHKDir;
         long hkDeadTimeinMillSecond = ConvertDateToMillSec(DEADLINE);
@@ -45,19 +48,24 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         long needToChange = 0;
         SntpClient sntpClient = new SntpClient();
 
-        if (sntpClient.requestTime("time.hko.hk", 5000)) {
-            now = sntpClient.getNtpTime() + SystemClock.elapsedRealtime() - sntpClient.getNtpTimeReference();
-            long localnow = System.currentTimeMillis();
-            if (Math.abs(localnow-now) > 1000*60*60) {
-                needToChange = 1;
-            }
-        }
-
-        if (needToChange == 1) {
-            // local system is wrong
-            milliSecondsUntilHKDir = hkDeadTimeinMillSecond - now;
-        } else {
+        if (flags [0] == 0) {
             milliSecondsUntilHKDir = hkDeadTimeinMillSecond - System.currentTimeMillis();
+
+        } else {
+            if (sntpClient.requestTime("time.hko.hk", 2000)) {
+                now = sntpClient.getNtpTime() + SystemClock.elapsedRealtime() - sntpClient.getNtpTimeReference();
+                long localnow = System.currentTimeMillis();
+                if (Math.abs(localnow-now) > 1000*60*60) {
+                    needToChange = 1;
+                }
+            }
+
+            if (needToChange == 1) {
+                // local system is wrong
+                milliSecondsUntilHKDir = hkDeadTimeinMillSecond - now;
+            } else {
+                milliSecondsUntilHKDir = hkDeadTimeinMillSecond - System.currentTimeMillis();
+            }
         }
 
         //Date time = new Date(now);
@@ -67,7 +75,6 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         } else {
             return 0L;
         }
-
     }
 
     /**
@@ -110,7 +117,7 @@ public class MySyncTimeTask extends AsyncTask <Void, Void, Long> {
         mainActivity.startTimer (milliSecondsUntilHKDir);
     }
 
-    static long ConvertDateToMillSec (String givenDateString) {
+    private static long ConvertDateToMillSec(String givenDateString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         long timeInMilliseconds = 0;
         try {
