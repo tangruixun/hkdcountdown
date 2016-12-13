@@ -33,7 +33,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MySyncTimeTask myTask;
+    private MySyncTimeTask initTask, myTask;
     private AdView adView;
     private TextView titleDesView;
     private Activity activity;
@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
-        myTask = new MySyncTimeTask(this);
+        initTask = new MySyncTimeTask(this);
 
-        myTask.execute(0);
+        initTask.execute(0);
 
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myTask= new MySyncTimeTask(this);
         if (isOnline()) {
             myTask.execute(1);
         }
