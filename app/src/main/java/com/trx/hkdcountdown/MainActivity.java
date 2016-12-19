@@ -339,6 +339,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+		if (!initTask.isCancelled()) {
+            initTask.cancel(false);
+        }
         if (!myTask.isCancelled()) {
             myTask.cancel(false);
         }
